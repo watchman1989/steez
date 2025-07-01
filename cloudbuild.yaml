@@ -1,21 +1,13 @@
 steps:
-  # 步骤1: 构建 Go 应用
-  - name: 'gcr.io/cloud-builders/go'
-    args: ['build', '-o', 'main', '.']
-    env:
-      - 'CGO_ENABLED=0'
-      - 'GOOS=linux'
-      - 'GOARCH=amd64'
-
-  # 步骤2: 构建 Docker 镜像
+  # 步骤1: 构建 Docker 镜像
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/$PROJECT_ID/steez:$COMMIT_SHA', '.']
 
-  # 步骤3: 推送镜像到 Container Registry
+  # 步骤2: 推送镜像到 Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/steez:$COMMIT_SHA']
 
-  # 步骤4: 部署到 Cloud Run
+  # 步骤3: 部署到 Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
