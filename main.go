@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"steez/comm"
-	"steez/srv"
 	"time"
+
+	"github.com/watchman1989/steez/comm"
+	"github.com/watchman1989/steez/srv"
 )
 
 func main() {

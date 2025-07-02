@@ -1,4 +1,4 @@
-module steez
+module github.com/watchman1989/steez
 
 go 1.23.4
 
