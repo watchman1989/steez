@@ -1,0 +1,4 @@
+server:
+  name: steez
+  port: 8080
+  

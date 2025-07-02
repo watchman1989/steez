@@ -6,12 +6,16 @@ import (
 
 	"github.com/watchman1989/steez/comm"
 	"github.com/watchman1989/steez/srv"
+	"github.com/watchman1989/steez/jobs"
 )
 
 func main() {
 	fmt.Println("hello, steez!")
 
 	comm.Init()
+
+	jm := jobs.InitJobs()
+	defer jm.Stop()
 
 	go srv.SrvStart()
 

@@ -2,11 +2,18 @@ module github.com/watchman1989/steez
 
 go 1.23.4
 
-require github.com/gin-gonic/gin v1.10.1
+require (
+	github.com/gin-gonic/gin v1.10.1
+	github.com/robfig/cron/v3 v3.0.1
+	github.com/watchman1989/utils/ft v0.0.0-20250702144540-3c91371c627d
+	github.com/watchman1989/utils/logger v0.0.0-20250702145807-a2856d2c5dbe
+	gopkg.in/yaml.v2 v2.4.0
+)
 
 require (
 	github.com/bytedance/sonic v1.11.6 // indirect
 	github.com/bytedance/sonic/loader v0.1.1 // indirect
+	github.com/cihub/seelog v0.0.0-20170130134532-f561c5e57575 // indirect
 	github.com/cloudwego/base64x v0.1.4 // indirect
 	github.com/cloudwego/iasm v0.2.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.3 // indirect
