@@ -1,0 +1,42 @@
+# Git 相关
+.git
+.gitignore
+
+# 构建产物
+main
+*.exe
+*.dll
+*.so
+*.dylib
+
+# 测试文件
+*_test.go
+*.test
+
+# 临时文件
+*.tmp
+*.temp
+
+# IDE 文件
+.vscode
+.idea
+*.swp
+*.swo
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 日志文件
+*.log
+
+# 文档
+README.md
+*.md
+
+# Cloud Build 相关
+cloudbuild.yaml
+cloudbuild-*.yaml
+
+# 本地构建脚本
+build.sh 

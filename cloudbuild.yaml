@@ -30,7 +30,7 @@ steps:
       - 'managed'
       - '--allow-unauthenticated'
       - '--port'
-      - '8808'
+      - '8080'
       - '--memory'
       - '512Mi'
       - '--cpu'
