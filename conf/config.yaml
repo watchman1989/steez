@@ -1,4 +1,11 @@
 server:
   name: steez
   port: 8080
+
+mysql:
+  host: 127.0.0.1
+  port: 3306
+  user: local_test
+  password: Mysql?3.1415926
+  dbname: steez
   
