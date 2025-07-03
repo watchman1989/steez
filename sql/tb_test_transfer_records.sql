@@ -11,5 +11,6 @@ CREATE TABLE tb_test_transfer_records (
     INDEX idx_transfer_no (transfer_no),
     INDEX idx_created_at (created_at),
     INDEX idx_deleted_at (deleted_at),
-    INDEX idx_updated_at (updated_at)
+    INDEX idx_updated_at (updated_at),
+    UNIQUE INDEX uk_from_to_account (from_account_id, to_account_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='转账记录表';

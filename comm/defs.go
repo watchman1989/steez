@@ -8,6 +8,8 @@ import (
 	"gopkg.in/yaml.v2"
 	"net"
 	"fmt"
+	"gorm.io/gorm"
+	"gorm.io/driver/mysql"
 	
 )
 
@@ -32,8 +34,14 @@ func Init() {
 		SrvName: GContext.GConfig.Server.Name,
 		SrvHost:host,
 	})
-
 	GContext.Logger = lg
+	//init mysql
+	db, err := InitMysqlClient(GContext.GConfig.Mysql)
+	if err != nil {
+		panic(err)
+	}
+	GContext.Mysql = db
+
 	GContext.Logger.Infof("init over")
 }
 
@@ -57,10 +65,12 @@ func initConfig(configPath string) {
 type GlobalContext struct {
 	GConfig GlobalConfig
 	Logger *logger.Logger
+	Mysql *gorm.DB
 }
 
 type GlobalConfig struct {
 	Server ServerConfig `yaml:"server"`
+	Mysql MysqlConfig `yaml:"mysql"`
 }
 
 type ServerConfig struct {
@@ -68,7 +78,13 @@ type ServerConfig struct {
 	Port int `yaml:"port"`
 }
 
-
+type MysqlConfig struct {
+	Host string `yaml:"host"`
+	Port int `yaml:"port"`
+	User string `yaml:"user"`
+	Password string `yaml:"password"`
+	Dbname string `yaml:"dbname"`
+}
 
 
 func GetLocalIp(name string) (ipAddr string, err error) {
@@ -95,4 +111,20 @@ func GetLocalIp(name string) (ipAddr string, err error) {
 		err = fmt.Errorf("get ip addr failed")
 	}
 	return
+}
+
+
+
+const (
+	dsnFmt = "%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local&timeout=10s"
+)
+
+func InitMysqlClient(config MysqlConfig) (*gorm.DB, error) {
+	dsn := fmt.Sprintf(dsnFmt, config.User, config.Password, config.Host, config.Port, config.Dbname)
+	DB, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	if err != nil {
+		fmt.Printf("####init mysql error: %s\n", err.Error())
+		return nil, err
+	}
+	return DB, nil
 }
