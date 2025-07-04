@@ -10,5 +10,6 @@ func RegisterRouter(r *gin.Engine) {
 	r.GET("/ping", Welcome)
 
 	r.POST("/api/query_account", api.QueryAccount)
+	r.GET("/api/query_account", api.QueryAccount)
 
 }

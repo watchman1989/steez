@@ -5,6 +5,8 @@ import (
 	"strings"
 	"github.com/watchman1989/steez/comm"
 	"context"
+	"errors"
+	"gorm.io/gorm"
 )
 
 
@@ -71,7 +73,7 @@ func RecursiveQuery(ctx context.Context, accountNo string, level int) (records [
 	sql = strings.Replace(sql, "LEVEL", fmt.Sprintf("%d", level), 1)
 	records = make([]TransferRecord, 0)
 	rows, err := comm.GContext.Mysql.Raw(sql).Rows()
-	if err != nil {
+	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
 		return
 	}
 	defer rows.Close()

@@ -20,14 +20,27 @@ type QueryAccountArgs struct {
 }
 
 func QueryAccount(c *gin.Context) {
-	args := QueryAccountArgs{}
-	if err := c.ShouldBindJSON(&args); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	var accountNo string
+	var level int
+	switch c.Request.Method {
+	case "GET":
+		accountNo = c.Query("account")
+		level = comm.StrToInt(c.Query("level"))
+	case "POST":
+		args := QueryAccountArgs{}
+		if err := c.ShouldBindJSON(&args); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		accountNo = args.AccountNo
+		level = args.Level
+	default:
+		c.JSON(http.StatusMethodNotAllowed, gin.H{"error": "Method not allowed"})
 		return
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), QueryAccountTimeout)
 	defer cancel()
-	records, err := do.RecursiveQuery(ctx, args.AccountNo, args.Level)
+	records, err := do.RecursiveQuery(ctx, accountNo, level)
 	if err != nil {
 		comm.GContext.Logger.Errorf("recursive query failed", "error", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
